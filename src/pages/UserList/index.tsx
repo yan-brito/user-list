@@ -77,7 +77,6 @@ export function UserList() {
     modalizeRef.current?.open();
   };
 
-
   return(
     <>
       <Container>
