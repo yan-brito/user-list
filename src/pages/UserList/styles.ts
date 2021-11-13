@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { FlatList, StatusBar } from 'react-native';
+import { Modalize } from 'react-native-modalize';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -84,7 +85,7 @@ export const Separator = styled.View`
 
   margin: 5px 0;
 
-  background-color: ${({ theme }) => theme.colors.title};
+  background-color: ${({ theme }) => theme.colors.text};
 `;
 
 export const Footer = styled.View`
@@ -123,4 +124,13 @@ export const AddIcon = styled(Icon).attrs({
 })`
   font-size: 30px;
   color: #FFF;
+`;
+
+export const CreateUserModal = styled(Modalize).attrs({
+  modalTopOffset: 30,
+  modalStyle: { 
+    marginHorizontal: 10,
+    paddingTop: 20
+  }
+})`
 `;

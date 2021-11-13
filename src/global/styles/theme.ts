@@ -10,6 +10,7 @@ export default {
     attention_light: 'rgba(232, 63, 91, 0.5)',
 
     shadow: '#D1D1D1',
+    shadow_light: '#ECECEC',
 
     shape: '#FFFFFF',
     shape_light: 'rgba(255, 255, 255, 0.7)',

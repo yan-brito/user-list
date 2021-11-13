@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { Modalize } from 'react-native-modalize';
 
 import { 
   AddButton, 
   AddIcon, 
   Container, 
   Content, 
+  CreateUserModal, 
   Footer, 
   Header, 
   HeaderShadow, 
@@ -14,6 +16,7 @@ import {
 } from './styles';
 
 import { UserCard, UserProps } from '../../components/UserCard';
+import { CreateUser } from '../CreateUser';
 
 export function UserList() {
 
@@ -68,24 +71,37 @@ export function UserList() {
     },
   ];
 
+  const modalizeRef = useRef<Modalize>(null);
+
+  function handleOpenCreateUserModal() {
+    modalizeRef.current?.open();
+  };
+
+
   return(
-    <Container>
-      <HeaderShadow/>
-      <Header>
-        <HeaderTitle>USUÁRIOS</HeaderTitle>
-      </Header>
-      <Content>
-        <List 
-          data={data}
-          keyExtractor={item => item.id}
-          renderItem={({ item }) => <UserCard data={item} />}
-          ItemSeparatorComponent={() => <Separator/> }
-        />
-      </Content>
-      <AddButton>
-        <AddIcon name="plus"/>
-      </AddButton>
-      <Footer/>
-    </Container>
+    <>
+      <Container>
+        <HeaderShadow/>
+        <Header>
+          <HeaderTitle>USUÁRIOS</HeaderTitle>
+        </Header>
+        <Content>
+          <List 
+            data={data}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <UserCard data={item} />}
+            ItemSeparatorComponent={() => <Separator/> }
+          />
+        </Content>
+        <AddButton onPress={handleOpenCreateUserModal} >
+          <AddIcon name="plus"/>
+        </AddButton>
+        <Footer/>
+      </Container>
+      <CreateUserModal 
+        ref={modalizeRef} 
+        children={<CreateUser/>}
+      />
+    </>
   );
 };

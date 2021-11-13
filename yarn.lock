@@ -5538,10 +5538,20 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-image-picker@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.2.0.tgz#852867e340da464fda6895b32d383d88a143e623"
+  integrity sha512-RT/MIDx/j6lSF7ZaHG1CU/Fw+TcY2FejvvzjfWbB3DUBp5cZU6JmIWwFEYD/GD8PSvE/3l6K1r67C02phk/wqw==
+
 react-native-iphone-x-helper@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
+
+react-native-modalize@^2.0.11:
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/react-native-modalize/-/react-native-modalize-2.0.11.tgz#a9b3c3d04a57b7413332dc659115021b7b7ececa"
+  integrity sha512-foRnZBvg0IOXi1TopNsci+60vnlvrGoPYVNVVlJC2jEASka2Juua3HQ43g8E4uxlu14xrSx8C+c5ra5GXmPQGA==
 
 react-native-responsive-fontsize@^0.5.1:
   version "0.5.1"
