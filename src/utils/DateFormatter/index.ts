@@ -1,6 +1,6 @@
 export function getTimestamp(date: string) {
     const formattedDate = date.replace(/\//g, '-').split('-').reverse().join('-');
-    return new Date(formattedDate);
+    return formattedDate
 };
 
 export function getAge(dateOfBirth: string) {

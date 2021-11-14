@@ -25,13 +25,21 @@ import {
   Title 
 } from './styles';
 
+import { database } from '../../database';
+import { User } from '../../database/model/Users';
+
 import { Input } from '../../components/Input';
-import { getAge, getTimestamp } from '../../utils/DateFormatter';
+import { getTimestamp } from '../../utils/DateFormatter';
 
 export type FormDataProps = {
   name: string;
   email: string;
   birth: string;
+}
+
+type Props = {
+  closeModal: () => void;
+  getUsers: () => void;
 }
 
 const schema = Yup.object({
@@ -47,7 +55,7 @@ const schema = Yup.object({
   .required('Digite a data de nascimento!')
 });
 
-export function CreateUser() {
+export function CreateUser({ closeModal, getUsers }: Props) {
   const [avatar, setAvatar] = useState('');
   const [gender, setGender] = useState('');
   
@@ -83,7 +91,7 @@ export function CreateUser() {
     setMale(false);
   }
 
-  function handleCreateUser(form: FormDataProps) {
+  async function handleCreateUser(form: FormDataProps) {
     if(gender === '') {
       Alert.alert('Selecione o gênero!')
       return
@@ -97,10 +105,8 @@ export function CreateUser() {
       return
     }
     
-
-    try {
     const data = {
-      user_id: uuid.v4(),
+      user_id: String(uuid.v4()),
       name: form.name,
       email: form.email,
       birth: timestamp,
@@ -108,10 +114,24 @@ export function CreateUser() {
       avatar
     };
 
-    console.log(data)
+    try {
+      const userCollection = database.get<User>('users');
+      await database.write(async () => {
+        await userCollection.create(( newUser ) => {
+          newUser.user_id = data.user_id,
+          newUser.name = data.name,
+          newUser.email = data.email,
+          newUser.birth = data.birth,
+          newUser.gender = data.gender,
+          newUser.avatar = data.avatar
+        })
+      })
     } catch (error) {
       console.log(error)
-    }
+    } finally {
+      getUsers();
+      closeModal();
+    };
 
   }
 

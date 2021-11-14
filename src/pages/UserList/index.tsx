@@ -1,105 +1,94 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Modalize } from 'react-native-modalize';
 
-import { 
-  AddButton, 
-  AddIcon, 
-  Container, 
-  Content, 
-  CreateUserModal, 
-  Footer, 
-  Header, 
-  HeaderShadow, 
-  HeaderTitle, 
+import {
+  AddButton,
+  AddIcon,
+  Container,
+  Content,
+  CreateUserModal,
+  Footer,
+  Header,
+  HeaderShadow,
+  HeaderTitle,
   List,
   Separator
 } from './styles';
 
 import { UserCard, UserProps } from '../../components/UserCard';
 import { CreateUser } from '../CreateUser';
+import { database } from '../../database';
+import { User } from '../../database/model/Users';
+import { getAge } from '../../utils/DateFormatter';
 
 export function UserList() {
-
-  const data: UserProps[] = [
-    {
-      id: '1',
-      name: 'John Joe',
-      age: 21,
-      email: 'jhon.joe@mail.com',
-      gender: 'male',
-      image: 'https://randomuser.me/api/portraits/men/63.jpg'
-    },
-    {
-      id: '2',
-      name: 'John Joe',
-      age: 21,
-      email: 'jhon.joe@mail.com',
-      gender: 'male',
-      image: 'https://randomuser.me/api/portraits/men/63.jpg'
-    },
-    {
-      id: '3',
-      name: 'John Joe',
-      age: 21,
-      email: 'jhon.joe@mail.com',
-      gender: 'male',
-      image: 'https://randomuser.me/api/portraits/men/63.jpg'
-    },
-    {
-      id: '4',
-      name: 'John Joe',
-      age: 21,
-      email: 'jhon.joe@mail.com',
-      gender: 'male',
-      image: 'https://randomuser.me/api/portraits/men/63.jpg'
-    },
-    {
-      id: '5',
-      name: 'John Joe',
-      age: 21,
-      email: 'jhon.joe@mail.com',
-      gender: 'male',
-      image: 'https://randomuser.me/api/portraits/men/63.jpg'
-    },
-    {
-      id: '6',
-      name: 'John Joe',
-      age: 21,
-      email: 'jhon.joe@mail.com',
-      gender: 'male',
-      image: 'https://randomuser.me/api/portraits/men/63.jpg'
-    },
-  ];
+  const [users, setUsers] = useState<UserProps[]>([]);
 
   const modalizeRef = useRef<Modalize>(null);
+
+  async function getUsers() {
+    try {
+      const userCollection = database.get<User>('users');
+      const users = await userCollection.query().fetch();
+
+      const usersFormatted: UserProps[] = users.map((user) => {
+        const userData = user._raw as unknown as UserProps; //typescript force typing hack
+
+        const age = getAge(userData.birth);
+
+        return {
+          id: userData.id,
+          name: userData.name,
+          birth: userData.birth,
+          age,
+          email: userData.email,
+          gender: userData.gender,
+          avatar: userData.avatar
+        }
+      });
+
+      setUsers(usersFormatted);
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   function handleOpenCreateUserModal() {
     modalizeRef.current?.open();
   };
+  
+  function handleCloseCreateUserModal() {
+    modalizeRef.current?.close();
+  };
 
-  return(
+  useEffect(() => {
+    getUsers();
+  }, [])
+
+  return (
     <>
       <Container>
-        <HeaderShadow/>
+        <HeaderShadow />
         <Header>
           <HeaderTitle>USUÁRIOS</HeaderTitle>
         </Header>
         <Content>
-          <List 
-            data={data}
+          <List
+            data={users}
             keyExtractor={item => item.id}
             renderItem={({ item }) => <UserCard data={item} />}
-            ItemSeparatorComponent={() => <Separator/> }
+            ItemSeparatorComponent={() => <Separator />}
           />
         </Content>
         <AddButton onPress={handleOpenCreateUserModal} >
-          <AddIcon name="plus"/>
+          <AddIcon name="plus" />
         </AddButton>
-        <Footer/>
+        <Footer />
       </Container>
-      <CreateUserModal 
-        ref={modalizeRef} 
-        children={<CreateUser/>}
+      <CreateUserModal
+        ref={modalizeRef}
+        children={<CreateUser getUsers={getUsers} closeModal={handleCloseCreateUserModal} />}
       />
     </>
   );

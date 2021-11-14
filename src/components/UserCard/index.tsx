@@ -16,10 +16,11 @@ import {
 export type UserProps = {
   id: string;
   name: string;
+  birth: string;
   age: number;
   email: string;
   gender: 'male' | 'female';
-  image: string;
+  avatar: string;
 }
 
 type Props = {
@@ -31,7 +32,7 @@ type Props = {
 export function UserCard({ data }: Props) {
   return(
     <Container>
-      <ProfileImage source={{ uri: data.image }} />
+      <ProfileImage source={{ uri: data.avatar }} />
       <Details>
         <NameContainer>
           <Name>{ data.name },</Name>
