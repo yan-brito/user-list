@@ -19,13 +19,30 @@ export const Container = styled.View`
   elevation: 5;
 `;
 
-export const ProfileImage = styled.Image`
+export const AvatarContainer = styled.View`
   width: ${RFValue(80)}px;
   height: ${RFValue(80)}px;
+
+  justify-content: center;
+  align-items: center;
 
   border-radius: 8px;
   border-width: 1px;
   border-color: ${({theme }) => theme.colors.text};
+
+  overflow: hidden;
+`;
+
+export const AvatarIcon = styled(Icon).attrs({
+  name: 'account'
+})`
+  font-size: ${RFValue(60)}px;
+  color: ${({theme }) => theme.colors.text};
+`;
+
+export const ProfileImage = styled.Image`
+  flex: 1;
+  width: 100%;
 `;
 
 export const Details = styled.View`

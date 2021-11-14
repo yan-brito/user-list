@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { 
+  AvatarContainer,
+  AvatarIcon,
   Container, 
   Details, 
   GenderContainer, 
@@ -32,11 +34,17 @@ type Props = {
 export function UserCard({ data }: Props) {
   return(
     <Container>
-      <ProfileImage source={{ uri: data.avatar }} />
+      <AvatarContainer>
+      { !data.avatar ?
+        <AvatarIcon/>
+        :
+        <ProfileImage source={{ uri: data.avatar }} />
+      }
+      </AvatarContainer>
       <Details>
         <NameContainer>
           <Name>{ data.name },</Name>
-          <Label>{ data.age } anos</Label>
+          <Label>{ data.age } {data.age === 1 ? 'ano' : 'anos'}</Label>
         </NameContainer>
         <GenderContainer>
           <GenderIcon name={data.gender === 'male' ? 'gender-male' : 'gender-female'} />
