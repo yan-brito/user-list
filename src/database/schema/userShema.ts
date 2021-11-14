@@ -12,6 +12,10 @@ const userSchema = tableSchema({
       type: 'string'
     },
     {
+      name: 'birth',
+      type: 'string'
+    },
+    {
       name: 'email',
       type: 'string'
     },

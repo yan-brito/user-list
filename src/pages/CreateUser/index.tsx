@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import { CameraOptions, launchImageLibrary } from 'react-native-image-picker';
+import { Alert } from 'react-native';
+import { launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import uuid from 'react-native-uuid';
 
 import { 
+  Avatar,
   Button, 
   ButtonTitle, 
   Container, 
@@ -20,20 +26,50 @@ import {
 } from './styles';
 
 import { Input } from '../../components/Input';
+import { getAge, getTimestamp } from '../../utils/DateFormatter';
 
+export type FormDataProps = {
+  name: string;
+  email: string;
+  birth: string;
+}
+
+const schema = Yup.object({
+  name: Yup.string()
+  .required('Digite o nome do usuário!'),
+
+  email: Yup.string()
+  .email('Email inválido!')
+  .required('Digite o email!'),
+
+  birth: Yup.string()
+  .min(10, 'Data de nascimento inválida!')
+  .required('Digite a data de nascimento!')
+});
 
 export function CreateUser() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [date, setDate] = useState('');
+  const [avatar, setAvatar] = useState('');
   const [gender, setGender] = useState('');
   
   const [male, setMale] = useState(false);
   const [female, setFemale] = useState(false);
 
-  let options: CameraOptions = {
-    mediaType: 'photo',
-    includeBase64: true
+  const { 
+    control, 
+    handleSubmit, 
+    formState: { errors } 
+  } = useForm<FormDataProps>({
+    resolver: yupResolver(schema)
+  });
+
+  function handleSetAvatar(response: ImagePickerResponse) {
+    if(response.didCancel){
+      return
+    }else if(response.errorMessage) {
+      Alert.alert(response.errorMessage)
+    }else if(response.assets){
+      setAvatar(response.assets[0].uri!)
+    }
   }
 
   function handleSetGenderMale() {
@@ -47,26 +83,56 @@ export function CreateUser() {
     setMale(false);
   }
 
+  function handleCreateUser(form: FormDataProps) {
+    if(gender === '') {
+      Alert.alert('Selecione o gênero!')
+      return
+    }
+
+    const timestamp = getTimestamp(form.birth);
+    const birth = new Date(timestamp).getTime();
+
+    if(birth > new Date().getTime()) {
+      Alert.alert('Data de nascimento inválida!')
+      return
+    }
+    
+
+    try {
+    const data = {
+      user_id: uuid.v4(),
+      name: form.name,
+      email: form.email,
+      birth: timestamp,
+      gender,
+      avatar
+    };
+
+    console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
+
   return(
     <Container>
       <Title>CRIAR USUÁRIO</Title>
       <Separator/>
-        <PickImageButton onPress={() => launchImageLibrary(options, (response) => {
-          if(response.didCancel){
-            console.log('cancel clicked');
-          }else if(response.errorMessage) {
-            console.log(response.errorMessage)
-          }else if(response.assets){
-            console.log(String(response.assets[0].uri))
+        <PickImageButton onPress={() => launchImageLibrary({ mediaType: 'photo', quality: 1 }, handleSetAvatar)}>
+          { !!avatar ?
+            <Avatar source={{ uri: avatar }} />
+          : 
+          <>
+            <PickImageIcon/>
+            <PickImageLabel>SELECIONAR FOTO</PickImageLabel>
+          </>
           }
-        })} >
-          <PickImageIcon/>
-          <PickImageLabel>SELECIONAR FOTO</PickImageLabel>
         </PickImageButton>
       <Form>
-        <Input label="Nome" type="text"  value={name} onChangeText={setName} />
-        <Input label="Email" type="email" value={email} onChangeText={setEmail} />
-        <Input label="Nascimento" type="date" value={date} onChangeText={setDate} />
+        <Input label="Nome" control={control} name="name" error={errors.name && errors.name.message}/>
+        <Input label="Email" control={control} name="email" error={errors.email && errors.email.message}/>
+        <Input label="Nascimento" control={control} name="birth" error={errors.birth && errors.birth.message}/>
         <GenderContainer>
           <GenderLabelContainer>
             <GenderLabel>Gênero</GenderLabel>
@@ -80,7 +146,9 @@ export function CreateUser() {
             <RadioLabel>Feminino</RadioLabel>
           </RadioContainer>
         </GenderContainer>
-          <Button>
+        {/* RectButton's onPress reports a typing error with ReactHookForm's handleSubmit function (This doesn't happen with TouchableOpacity.)
+         @ts-ignore  */}
+          <Button onPress={handleSubmit(handleCreateUser)}>
             <ButtonTitle>CRIAR</ButtonTitle>
           </Button>
       </Form>

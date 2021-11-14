@@ -39,3 +39,14 @@ export const Label = styled.Text`
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.title};
 `;
+
+export const Error = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(14)}px;
+
+  color: ${({ theme }) => theme.colors.attention};
+
+  position: absolute;
+  right: 5px;
+  top: -18px;
+`;

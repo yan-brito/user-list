@@ -1,15 +1,18 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
+import { Controller, Control } from 'react-hook-form';
 
-import { Container, FieldInput, Label, LabelContainer } from './styles';
+import { Container, Error, FieldInput, Label, LabelContainer } from './styles';
+
+import { FormDataProps } from '../../pages/CreateUser';
 
 type Props = {
+  control: Control<FormDataProps>;
   label: string;
-  type: 'date' | 'text' | 'email';
-  value: string;
-  onChangeText: Dispatch<SetStateAction<string>>;
+  name: 'birth' | 'name' | 'email';
+  error: string | undefined;
 };
 
-export function Input({ label, type, value, onChangeText }: Props) {
+export function Input({ label, control, name, error }: Props) {
 
   function dateMask(date: string) {
     return date
@@ -21,12 +24,20 @@ export function Input({ label, type, value, onChangeText }: Props) {
 
   return(
     <Container>
-      <FieldInput 
-        value={value}
-        onChangeText={type === 'date' ? (value) => onChangeText(dateMask(value)) : onChangeText}
-        keyboardType={type === 'date' ? 'numeric' : (type === 'email' ? 'email-address' : 'default')}
-        spellCheck={false}
+      <Controller 
+        control={control}
+        render={({  field:  { onChange, value }}) => (
+         <FieldInput 
+            value={value}
+            onChangeText={name === 'birth' ? (value) => onChange(dateMask(value)) : onChange}
+            keyboardType={name === 'birth' ? 'numeric' : (name === 'email' ? 'email-address' : 'default')}
+            autoCapitalize={name === 'email' ? 'none' : 'sentences'}
+            spellCheck={false}
+          />
+        )}
+        name={name}
       />
+      { error && <Error> { error } </Error> }
       <LabelContainer>
         <Label>{ label }</Label>
       </LabelContainer>

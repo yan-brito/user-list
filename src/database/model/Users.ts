@@ -9,6 +9,9 @@ class User extends Model {
 
   @field('name')
   name!: string;
+
+  @field('birth')
+  birth!: string;
   
   @field('email')
   email!: string;

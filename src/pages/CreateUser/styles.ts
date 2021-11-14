@@ -51,6 +51,13 @@ export const PickImageButton = styled.TouchableOpacity.attrs({
   background-color: ${({ theme }) => theme.colors.background};
 
   position: relative;
+  
+  overflow: hidden;
+`;
+
+export const Avatar = styled.Image`
+  flex: 1;
+  width: 100%;
 `;
 
 export const PickImageIcon = styled(Icon).attrs({
