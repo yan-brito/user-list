@@ -127,9 +127,10 @@ export const AddIcon = styled(Icon).attrs({
 `;
 
 export const CreateUserModal = styled(Modalize).attrs({
-  modalTopOffset: 30,
+  modalTopOffset: RFValue(70),
   modalStyle: { 
-    marginHorizontal: 10,
+    flex: 1,
+    marginHorizontal: 20,
     paddingTop: 20
   }
 })`
