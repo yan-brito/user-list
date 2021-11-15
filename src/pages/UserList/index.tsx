@@ -12,6 +12,8 @@ import {
   HeaderShadow,
   HeaderTitle,
   List,
+  Loading,
+  Notification,
   Separator
 } from './styles';
 
@@ -23,10 +25,13 @@ import { getAge } from '../../utils/DateFormatter';
 
 export function UserList() {
   const [users, setUsers] = useState<UserProps[]>([]);
+  const [isLoading, setLoading] = useState(true);
 
   const modalizeRef = useRef<Modalize>(null);
 
   async function getUsers() {
+    setLoading(true);
+
     try {
       const userCollection = database.get<User>('users');
       const users = await userCollection.query().fetch();
@@ -51,6 +56,8 @@ export function UserList() {
 
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -74,12 +81,20 @@ export function UserList() {
           <HeaderTitle>USUÁRIOS</HeaderTitle>
         </Header>
         <Content>
-          <List
-            data={users}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => <UserCard data={item} />}
-            ItemSeparatorComponent={() => <Separator />}
-          />
+          { isLoading ?
+            <Loading/>
+            :
+            ( !users.length ?
+              <Notification>Não há usuários cadastrados.</Notification>
+              :
+              <List
+                data={users}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => <UserCard data={item} />}
+                ItemSeparatorComponent={() => <Separator />}
+              />
+            )
+          }
         </Content>
         <AddButton onPress={handleOpenCreateUserModal} >
           <AddIcon name="plus" />

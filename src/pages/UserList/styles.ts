@@ -56,10 +56,25 @@ export const HeaderTitle = styled.Text`
 `;
 
 export const Content = styled.View`
-  flex: 1;
   width: 100%;
+
+  flex: 1;
+  justify-content: center;
+  align-items: center;
   
   padding: 0 10px;
+`;
+
+export const Loading = styled.ActivityIndicator.attrs({
+  size: 'large'
+})`
+  color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const Notification = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.medium};
+  font-size: ${RFValue(18)}px;
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const List = styled(
@@ -96,8 +111,8 @@ export const Footer = styled.View`
 `;
 
 export const AddButton = styled(RectButton)`
-  width: 60px;
-  height: 60px;
+  width: ${RFValue(60)}px;
+  height: ${RFValue(60)}px;
 
   border-radius: 30px;
 
@@ -111,10 +126,6 @@ export const AddButton = styled(RectButton)`
   bottom: 10px;
 
   z-index: 9;
-
-  shadow-color: #000;
-  shadow-opacity: 0.25;
-  shadow-radius: 3.84px;
 
   elevation: 5;
 `;
