@@ -37,12 +37,12 @@
 
 # 🚀 Getting started
 
-###Clone the project
+### Clone the project
 
     $ git clone https://github.com/yan-brito/user-list.git
 
 
-###Running
+### Running
 
     # Install the dependencies
     $ yarn
