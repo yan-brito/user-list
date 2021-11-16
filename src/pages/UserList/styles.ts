@@ -66,14 +66,14 @@ export const Content = styled.View`
 `;
 
 export const Loading = styled.ActivityIndicator.attrs({
-  size: 'large'
+  size: 'large',
+  color: '#0091EA'
 })`
-  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const Notification = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(14)}px;
   color: ${({ theme }) => theme.colors.title};
 `;
 
@@ -114,7 +114,7 @@ export const AddButton = styled(RectButton)`
   width: ${RFValue(60)}px;
   height: ${RFValue(60)}px;
 
-  border-radius: 30px;
+  border-radius: ${RFValue(30)}px;
 
   background-color: ${({ theme }) => theme.colors.primary_dark};
 
@@ -133,7 +133,7 @@ export const AddButton = styled(RectButton)`
 export const AddIcon = styled(Icon).attrs({
 
 })`
-  font-size: 30px;
+  font-size: ${RFValue(30)}px;
   color: #FFF;
 `;
 

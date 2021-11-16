@@ -56,7 +56,7 @@ export const NameContainer = styled.View`
 
 export const Name = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(14)}px;
   color: ${({ theme }) => theme.colors.title};
 
   margin-bottom: 5px;
@@ -65,7 +65,7 @@ export const Name = styled.Text`
 
 export const Label = styled.Text`
   font-family: ${({ theme }) => theme.fonts.light};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(12)}px;
   color: ${({ theme }) => theme.colors.text};
 
   margin-bottom: 2px;
@@ -77,7 +77,7 @@ export const GenderContainer = styled.View`
 `;
 
 export const GenderIcon = styled(Icon)`
-  font-size: 16px;
+  font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.title};
 
   margin-right: 5px;
@@ -91,7 +91,7 @@ export const MailContainer = styled.View`
 export const MailIcon = styled(Icon).attrs({
   name: 'at'
 })`
-  font-size: 16px;
+  font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.title};
 
   margin-right: 5px;

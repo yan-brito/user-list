@@ -21,7 +21,7 @@ export const Container = styled.KeyboardAvoidingView.attrs({
 
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
-  font-size: ${RFValue(20)}px;
+  font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.title};
 `;
 
@@ -85,7 +85,7 @@ export const GenderContainer = styled.View`
   width: 100%;
 
   margin-top: 10px;
-  padding: 30px 0;
+  padding: ${RFValue(30)}px 0;
 
   flex-direction: row;
   align-items: center;
@@ -109,7 +109,7 @@ export const GenderLabelContainer = styled.Text`
 
 export const GenderLabel = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(12)}px;
   color: ${({ theme }) => theme.colors.title};
 `;
 
@@ -153,7 +153,7 @@ export const Button = styled(RectButton)`
 
 export const ButtonTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(14)}px;
   
   color: ${({ theme }) => theme.colors.shape};
 `;

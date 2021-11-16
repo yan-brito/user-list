@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   width: 100%;
-  height: 40px;
+  height: ${RFValue(40)}px;
 
   margin: 10px 0;
 `;
@@ -12,7 +12,7 @@ export const FieldInput = styled.TextInput`
   flex: 1;
 
   font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(12)}px;
   color: ${({ theme }) => theme.colors.text};
 
   background-color: ${({ theme }) => theme.colors.shape};
@@ -36,13 +36,13 @@ export const LabelContainer = styled.View`
 
 export const Label = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(12)}px;
   color: ${({ theme }) => theme.colors.title};
 `;
 
 export const Error = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(8)}px;
 
   color: ${({ theme }) => theme.colors.attention};
 
